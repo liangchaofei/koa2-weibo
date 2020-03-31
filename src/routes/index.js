@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-03-31 10:31:21
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-31 11:16:15
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/index.js
  */
@@ -19,14 +19,14 @@ router.get('/string', async (ctx, next) => {
 })
 
 router.get('/json', async (ctx, next) => {
-  const session = ctx.session;
-  if(session.viewNum == null){
-    session.viewNum = 0;
-  }
-  session.viewNum++
+  // const session = ctx.session;
+  // if(session.viewNum == null){
+  //   session.viewNum = 0;
+  // }
+  // session.viewNum++
   ctx.body = {
     title: 'koa2 json',
-    num:session.viewNum
+    // num:session.viewNum
   }
 })
 
