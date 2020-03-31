@@ -1,2 +1,2 @@
-# koa2-weibo
-koa2新浪微博
+# weibo-koa2
+新浪微博
