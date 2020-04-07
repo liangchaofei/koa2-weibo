@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 20:30:08
- * @LastEditTime: 2020-04-07 23:20:59
+ * @LastEditTime: 2020-04-08 00:21:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/user.js
@@ -13,7 +13,8 @@ const { SuccessModel,ErrorModel } = require('../model/ResModel')
 const { 
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
-    registerFailInfo
+    registerFailInfo,
+    loginFailInfo
 } = require('../model/ErrorInfo') 
 
 const doCrypto = require('../utils/cryp')
@@ -51,7 +52,21 @@ async function register({userName,password,gender}){
         return new ErrorModel(registerFailInfo)
     }
 }
+
+// 登陆
+async function login(ctx,userName,password){
+    const userInfo = await getUserInfo(userName,doCrypto(password))
+    if(!userInfo){
+        return new ErrorModel(loginFailInfo);
+    }
+
+    if(ctx.session.userInfo == null){
+        ctx.session.userInfo = userInfo;
+    }
+    return new SuccessModel()
+}
  module.exports = {
     isExist,
-    register
+    register,
+    login
  }
