@@ -1,16 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2020-03-30 22:54:44
- * @LastEditTime: 2020-03-30 22:54:59
+ * @LastEditTime: 2020-04-04 18:17:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/db/sync.js
  */
 
 // 同步数据库
-const seq = require('./seq');
+const seq = require('./seq.js');
 
-// require('./model');
+require('./model/index');
 
 // 测试连接
 seq.authenticate().then(() => {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-03-31 11:19:04
+ * @LastEditTime: 2020-04-07 22:04:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/app.js
@@ -19,6 +19,7 @@ const logger = require('koa-logger')
 const { isProd } = require('./utils/env')
 
 const errorViewRouter = require('./routes/view/error')
+const userAPIRouter = require('./routes/api/user')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
@@ -68,6 +69,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(userAPIRouter.routes(),userAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 写在最后
 
 // error-handling
