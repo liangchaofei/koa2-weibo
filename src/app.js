@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-04-07 22:04:58
+ * @LastEditTime: 2020-04-07 23:16:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/app.js
@@ -13,10 +13,11 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-// const session = require('koa-generic-session');
-// const storeRedis = require('koa-redis');
-// const { REDIS_CONF } = require('./conf/db')
+const session = require('koa-generic-session');
+const storeRedis = require('koa-redis');
+const { REDIS_CONF } = require('./conf/db')
 const { isProd } = require('./utils/env')
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const errorViewRouter = require('./routes/view/error')
 const userAPIRouter = require('./routes/api/user')
@@ -45,19 +46,19 @@ app.use(views(__dirname + '/views', {
 }))
 
 // session配置
-// app.keys = ['dadas_233j']
-// app.use(session({
-//   key: 'weibo.sid', // cookie name 默认是 'koa.sid'
-//   prefix: 'weibo:sess:', // redis key的前缀，默认是 'koa:sess:'
-//   cookie:{
-//     path: '/',
-//     httpOnly: true,
-//     maxAge: 24 * 60 * 60 * 1000,
-//   },
-//   store:storeRedis({
-//     all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-//   })
-// }))
+app.keys = [SESSION_SECRET_KEY]
+app.use(session({
+  key: 'weibo.sid', // cookie name 默认是 'koa.sid'
+  prefix: 'weibo:sess:', // redis key的前缀，默认是 'koa:sess:'
+  cookie:{
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+  store:storeRedis({
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  })
+}))
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()

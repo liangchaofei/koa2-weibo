@@ -1,7 +1,7 @@
 /*
  * @Author: liangchaofei
  * @Date: 2020-04-04 20:38:06
- * @LastEditTime: 2020-04-07 22:31:26
+ * @LastEditTime: 2020-04-07 23:00:06
  * @LastEditors: Please set LastEditors
  * @Description: user services
  * @FilePath: /koa2-weibo/src/services/user.js
@@ -36,6 +36,19 @@ const { formatUser }  = require('./_format')
      return formatRes;
  }
 
+async function createUser({userName,password,gender=3,nickName}){
+    const result = await User.create({
+        userName,
+        password,
+        nickName:nickName ? nickName: userName,
+        gender
+    })
+
+    return result.dataValues;
+}
+
+
  module.exports= {
-    getUserInfo
+    getUserInfo,
+    createUser
  }
