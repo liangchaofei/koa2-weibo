@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-08 00:24:37
- * @LastEditTime: 2020-04-08 22:29:24
+ * @LastEditTime: 2020-04-08 22:38:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/user.js
@@ -33,6 +33,7 @@ router.get('/register',async (ctx,next) => {
 })
 
 router.get('/setting',loginRedirect, async (ctx,next ) => {
+    console.log('ctx.session.userInfo',ctx.session.userInfo)
     await ctx.render('setting',ctx.session.userInfo)
 })
 module.exports = router;

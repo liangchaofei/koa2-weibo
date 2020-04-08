@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 20:30:08
- * @LastEditTime: 2020-04-08 21:52:47
+ * @LastEditTime: 2020-04-08 22:47:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/user.js
@@ -57,6 +57,7 @@ async function register({userName,password,gender}){
 // 登陆
 async function login(ctx,userName,password){
     const userInfo = await getUserInfo(userName,doCrypto(password))
+    console.log('userInfo',userInfo)
     if(!userInfo){
         return new ErrorModel(loginFailInfo);
     }

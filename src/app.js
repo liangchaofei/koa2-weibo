@@ -1,11 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-04-08 00:32:24
+ * @LastEditTime: 2020-04-08 23:41:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/app.js
  */
+const path = require('path')
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
@@ -15,11 +16,14 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session');
 const storeRedis = require('koa-redis');
+const koaStatic = require('koa-static')
+
 const { REDIS_CONF } = require('./conf/db')
 const { isProd } = require('./utils/env')
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const errorViewRouter = require('./routes/view/error')
+const utilsAPIRouter = require('./routes/api/utils')
 const userAPIRouter = require('./routes/api/user')
 const index = require('./routes/index')
 const users = require('./routes/view/user')
@@ -39,7 +43,8 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(koaStatic(__dirname + '/public'))
+app.use(koaStatic(path.join(__dirname, '..', 'uploadFiles')))
 
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
@@ -70,6 +75,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
 app.use(userAPIRouter.routes(),userAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 写在最后
 
