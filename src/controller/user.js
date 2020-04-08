@@ -1,20 +1,21 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 20:30:08
- * @LastEditTime: 2020-04-08 00:21:09
+ * @LastEditTime: 2020-04-08 21:52:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/user.js
  */
 
  // user controller
-const { getUserInfo,createUser } = require('../services/user')
+const { getUserInfo,createUser,deleteUser } = require('../services/user')
 const { SuccessModel,ErrorModel } = require('../model/ResModel')
 const { 
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
     registerFailInfo,
-    loginFailInfo
+    loginFailInfo,
+    deleteUserFailInfo
 } = require('../model/ErrorInfo') 
 
 const doCrypto = require('../utils/cryp')
@@ -65,8 +66,18 @@ async function login(ctx,userName,password){
     }
     return new SuccessModel()
 }
+
+// 删除当前用户
+async function deleteCurrUser(userName){
+    const result = await deleteUser(userName)
+    if(result){
+        return new SuccessModel()
+    }
+    return new ErrorModel(deleteUserFailInfo)
+}
  module.exports = {
     isExist,
     register,
-    login
+    login,
+    deleteCurrUser
  }

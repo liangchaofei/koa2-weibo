@@ -1,12 +1,12 @@
 /*
  * @Author: liang chaofei
  * @Date: 2020-04-07 23:32:15
- * @LastEditTime: 2020-04-07 23:37:09
+ * @LastEditTime: 2020-04-08 00:29:38
  * @LastEditors: Please set LastEditors
  * @Description: user 数据格式校验
  * @FilePath: /koa2-weibo/src/validator/user.js
  */
-const validate = require('./_validate')
+const validate = require('./validate')
 
 // 校验规则
 const SCHEMA = {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-04-07 23:16:28
+ * @LastEditTime: 2020-04-08 00:32:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/app.js
@@ -22,7 +22,7 @@ const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 const errorViewRouter = require('./routes/view/error')
 const userAPIRouter = require('./routes/api/user')
 const index = require('./routes/index')
-const users = require('./routes/users')
+const users = require('./routes/view/user')
 
 // error handler
 let onerrorConf = {}
