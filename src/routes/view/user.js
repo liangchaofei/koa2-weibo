@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-04-08 00:24:37
- * @LastEditTime: 2020-04-08 00:28:10
+ * @LastEditTime: 2020-04-08 22:29:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/user.js
  */
 const router = require('koa-router')();
-
+const {loginRedirect } = require('../../middlewares/loginChecks')
 
 // 获取登陆信息
 function getLoginInfo(ctx){
@@ -32,4 +32,7 @@ router.get('/register',async (ctx,next) => {
     await ctx.render('register',getLoginInfo(ctx))
 })
 
+router.get('/setting',loginRedirect, async (ctx,next ) => {
+    await ctx.render('setting',ctx.session.userInfo)
+})
 module.exports = router;
