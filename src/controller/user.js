@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 20:30:08
- * @LastEditTime: 2020-04-09 22:47:29
+ * @LastEditTime: 2020-04-09 23:02:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/user.js
@@ -16,7 +16,8 @@ const {
     registerFailInfo,
     loginFailInfo,
     deleteUserFailInfo,
-    changeInfoFailInfo
+    changeInfoFailInfo,
+    changePasswordFailInfo
 } = require('../model/ErrorInfo') 
 
 const doCrypto = require('../utils/cryp')
@@ -65,6 +66,15 @@ async function changeInfo(ctx, { nickName, city, picture }) {
 }
 
 /**
+ * 退出登录
+ * @param {Object} ctx ctx
+ */
+async function logout(ctx) {
+    delete ctx.session.userInfo
+    return new SuccessModel()
+}
+
+/**
  *@param 
  *
  * @param {*} {userName,password,gender}
@@ -110,10 +120,36 @@ async function deleteCurrUser(userName){
     }
     return new ErrorModel(deleteUserFailInfo)
 }
+
+/**
+ * 修改密码
+ * @param {string} userName 用户名
+ * @param {string} password 当前密码
+ * @param {string} newPassword 新密码
+ */
+async function changePassword(userName, password, newPassword) {
+    const result = await updateUser(
+        {
+            newPassword: doCrypto(newPassword)
+        },
+        {
+            userName,
+            password: doCrypto(password)
+        }
+    )
+    if (result) {
+        // 成功
+        return new SuccessModel()
+    }
+    // 失败
+    return new ErrorModel(changePasswordFailInfo)
+}
  module.exports = {
     isExist,
     register,
     login,
     deleteCurrUser,
-    changeInfo
+    changeInfo,
+    changePassword,
+    logout
  }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 18:28:27
- * @LastEditTime: 2020-04-09 22:46:12
+ * @LastEditTime: 2020-04-09 23:02:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/api/user.js
@@ -9,7 +9,7 @@
 
 
  const router = require('koa-router')()
- const { isExist,register,login,deleteCurrUser,changeInfo } = require('../../controller/user')
+ const { isExist,register,login,deleteCurrUser,changeInfo,changePassword ,logout} = require('../../controller/user')
 const userValidate = require('../../validator/user')
 const { genValidator } = require('../../middlewares/validator')
 const { isTest } = require('../../utils/env')
@@ -55,4 +55,18 @@ router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, 
     const { nickName, city, picture } = ctx.request.body
     ctx.body = await changeInfo(ctx, { nickName, city, picture })
 })
+
+
+// 修改密码
+router.patch('/changePassword', loginCheck, genValidator(userValidate), async (ctx, next) => {
+    const { password, newPassword } = ctx.request.body
+    const { userName } = ctx.session.userInfo
+    ctx.body = await changePassword(userName, password, newPassword)
+})
+
+// 退出登录
+router.post('/logout', loginCheck, async (ctx, next) => {
+    ctx.body = await logout(ctx)
+})
+
  module.exports = router;
