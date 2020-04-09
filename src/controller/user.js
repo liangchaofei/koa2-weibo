@@ -1,21 +1,22 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 20:30:08
- * @LastEditTime: 2020-04-08 22:47:42
+ * @LastEditTime: 2020-04-09 22:47:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/user.js
  */
 
  // user controller
-const { getUserInfo,createUser,deleteUser } = require('../services/user')
+const { getUserInfo,createUser,deleteUser,updateUser } = require('../services/user')
 const { SuccessModel,ErrorModel } = require('../model/ResModel')
 const { 
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
     registerFailInfo,
     loginFailInfo,
-    deleteUserFailInfo
+    deleteUserFailInfo,
+    changeInfoFailInfo
 } = require('../model/ErrorInfo') 
 
 const doCrypto = require('../utils/cryp')
@@ -28,7 +29,40 @@ const doCrypto = require('../utils/cryp')
         return new ErrorModel(registerUserNameNotExistInfo)
     }
 }
+/**
+ * 修改个人信息
+ * @param {Object} ctx ctx
+ * @param {string} nickName 昵称
+ * @param {string} city 城市
+ * @param {string} picture 头像
+ */
+async function changeInfo(ctx, { nickName, city, picture }) {
+    const { userName } = ctx.session.userInfo
+    if (!nickName) {
+        nickName = userName
+    }
 
+    const result = await updateUser(
+        {
+            newNickName: nickName,
+            newCity: city,
+            newPicture: picture
+        },
+        { userName }
+    )
+    if (result) {
+        // 执行成功
+        Object.assign(ctx.session.userInfo, {
+            nickName,
+            city,
+            picture
+        })
+        // 返回
+        return new SuccessModel()
+    }
+    // 失败
+    return new ErrorModel(changeInfoFailInfo)
+}
 
 /**
  *@param 
@@ -80,5 +114,6 @@ async function deleteCurrUser(userName){
     isExist,
     register,
     login,
-    deleteCurrUser
+    deleteCurrUser,
+    changeInfo
  }
