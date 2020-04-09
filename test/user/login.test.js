@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-08 21:55:30
- * @LastEditTime: 2020-04-08 22:06:27
+ * @LastEditTime: 2020-04-09 23:08:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/test/user/login.test.js
@@ -76,29 +76,29 @@ test('登录，应该成功', async () => {
 })
 
 // 修改基本信息
-// test('修改基本信息应该成功', async () => {
-//     const res = await server
-//         .patch('/api/user/changeInfo')
-//         .send({
-//             nickName: '测试昵称',
-//             city: '测试城市',
-//             picture: '/test.png'
-//         })
-//         .set('cookie', COOKIE)
-//     expect(res.body.errno).toBe(0)
-// })
+test('修改基本信息应该成功', async () => {
+    const res = await server
+        .patch('/api/user/changeInfo')
+        .send({
+            nickName: '测试昵称',
+            city: '测试城市',
+            picture: '/test.png'
+        })
+        .set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+})
 
 // 修改密码
-// test('修改密码应该成功', async () => {
-//     const res = await server
-//         .patch('/api/user/changePassword')
-//         .send({
-//             password,
-//             newPassword: `p_${Date.now()}`
-//         })
-//         .set('cookie', COOKIE)
-//     expect(res.body.errno).toBe(0)
-// })
+test('修改密码应该成功', async () => {
+    const res = await server
+        .patch('/api/user/changePassword')
+        .send({
+            password,
+            newPassword: `p_${Date.now()}`
+        })
+        .set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+})
 
 // 删除
 test('删除用户，应该成功', async () => {
@@ -109,12 +109,12 @@ test('删除用户，应该成功', async () => {
 })
 
 // 退出
-// test('退出登录应该成功', async () => {
-//     const res = await server
-//         .post('/api/user/logout')
-//         .set('cookie', COOKIE)
-//     expect(res.body.errno).toBe(0)
-// })
+test('退出登录应该成功', async () => {
+    const res = await server
+        .post('/api/user/logout')
+        .set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+})
 
 // 再次查询用户，应该不存在
 test('删除之后，再次查询注册的用户名，应该不存在', async () => {
