@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-10 00:12:53
- * @LastEditTime: 2020-04-10 00:13:45
+ * @LastEditTime: 2020-04-10 23:24:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/test/testUserInfo.js
