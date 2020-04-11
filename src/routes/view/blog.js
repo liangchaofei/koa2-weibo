@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:33:18
- * @LastEditTime: 2020-04-11 10:31:32
+ * @LastEditTime: 2020-04-11 11:20:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/blog.js
@@ -10,7 +10,7 @@ const router = require('koa-router')();
 const { getProfileBlogList } = require('../../controller/blog-profile')
 const { getSquareBlogList } = require('../../controller/blog-square')
 const { loginRedirect } = require('../../middlewares/loginChecks')
-const { getFnas } = require('../../controller/user-relation')
+const { getFans ,getFollowers} = require('../../controller/user-relation')
 // 首页
 router.get('/', loginRedirect, async (ctx, next) => {
     await ctx.render('index', {})
@@ -50,9 +50,12 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     const { isEmpty, count, pageSize, pageIndex, blogList } = result;
 
     // ????
-    const fansResult = await getFnas(curUserInfo.id);
+    const fansResult = await getFans(curUserInfo.id);
     const { count:fansCount,fansList} = fansResult.data;
 
+    // ???????
+    const followersResult = await getFollowers(curUserInfo.id);
+    const {count:followersCount,followersList } = followersResult.data;
     // ??????
     const amIFollowed = fansList.some(item => item.userName === myUserName)
     await ctx.render('profile', {
@@ -65,6 +68,10 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
             fansData: {
                 count:fansCount,
                 list:fansList,
+            },
+            followersData:{
+                count:followersCount,
+                list:followersList
             },
             amIFollowed
         }
