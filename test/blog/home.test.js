@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-10 00:09:34
- * @LastEditTime: 2020-04-10 00:13:16
+ * @LastEditTime: 2020-04-11 16:24:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/test/blog/home.test.js
@@ -31,4 +31,18 @@ test('创建一条微博，应该成功', async () => {
 
     // 记录微博 id
     BLOG_ID = res.body.data.id
+})
+
+// 加载第一页数据
+test('首页，加载第一页数据', async () => {
+    const res = await server
+                    .get(`/api/blog/loadMore/0`)
+                    .set('cookie', Z_COOKIE)  // 设置 cookie
+    expect(res.body.errno).toBe(0)
+    const data = res.body.data
+    expect(data).toHaveProperty('isEmpty')
+    expect(data).toHaveProperty('blogList')
+    expect(data).toHaveProperty('pageSize')
+    expect(data).toHaveProperty('pageIndex')
+    expect(data).toHaveProperty('count')
 })
