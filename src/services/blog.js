@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:54:10
- * @LastEditTime: 2020-04-11 10:19:42
+ * @LastEditTime: 2020-04-11 16:12:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/services/blog.js
  */
 
-const { Blog , User } = require('../db/model/index')
-const { formatUser } = require('./_format')
+const { Blog , User ,UserRelation} = require('../db/model/index')
+const { formatUser ,formatBlog} = require('./_format')
  /**
  * 创建微博
  * @param {Object} param0 创建微博的数据 { userId, content, image }
@@ -55,7 +55,47 @@ async function getBlogListByUser({userName,pageIndex = 0 ,pageSize=10}){
         blogList
     }
 }
+
+/**
+ * 获取关注着的微博列表（首页）
+ * @param {Object} param0 查询条件 { userId, pageIndex = 0, pageSize = 10 }
+ */
+async function getFollowersBlogList({ userId, pageIndex = 0, pageSize = 10 }) {
+    const result = await Blog.findAndCountAll({
+        limit: pageSize, // 每页多少条
+        offset: pageSize * pageIndex, // 跳过多少条
+        order: [
+            ['id', 'desc']
+        ],
+        include: [
+            {
+                model: User,
+                attributes: ['userName', 'nickName', 'picture']
+            },
+            {
+                model: UserRelation,
+                attributes: ['userId', 'followerId'],
+                where: { userId }
+            }
+        ]
+    })
+
+    // 格式化数据
+    let blogList = result.rows.map(row => row.dataValues)
+    blogList = formatBlog(blogList)
+    blogList = blogList.map(blogItem => {
+        blogItem.user = formatUser(blogItem.user.dataValues)
+        return blogItem
+    })
+
+    return {
+        count: result.count,
+        blogList
+    }
+}
+
 module.exports = {
     createBlog,
-    getBlogListByUser
+    getBlogListByUser,
+    getFollowersBlogList
 }

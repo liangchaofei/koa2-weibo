@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:50:37
- * @LastEditTime: 2020-04-10 00:05:17
+ * @LastEditTime: 2020-04-11 16:22:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/api/blog-home.js
@@ -11,6 +11,8 @@ const { loginCheck } = require('../../middlewares/loginChecks')
 const { create } = require('../../controller/blog-home')
 const { genValidator } = require('../../middlewares/validator')
 const blogValidate = require('../../validator/blog')
+const { getHomeBlogList } = require('../../controller/blog-home')
+const { getBlogListStr } = require('../../utils/blog')
 
 router.prefix('/api/blog')
 
@@ -22,4 +24,15 @@ router.post('/create', loginCheck, genValidator(blogValidate), async (ctx, next)
 })
 
 
+// 加载更多
+router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
+    let { pageIndex } = ctx.params
+    pageIndex = parseInt(pageIndex)  // 转换 number 类型
+    const { id: userId } = ctx.session.userInfo
+    const result = await getHomeBlogList(userId, pageIndex)
+    // 渲染模板
+    result.data.blogListTpl = getBlogListStr(result.data.blogList)
+
+    ctx.body = result
+})
 module.exports =router;

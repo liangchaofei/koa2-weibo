@@ -1,17 +1,18 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:53:11
- * @LastEditTime: 2020-04-10 00:02:34
+ * @LastEditTime: 2020-04-11 16:15:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/controller/blog-home.js
  */
 
 
-const { createBlog } = require('../services/blog')
+const { createBlog,getFollowersBlogList } = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBlogFailInfo } = require('../model/ErrorInfo')
 const xss = require('xss')
+const { PAGE_SIZE } = require('../conf/constant')
 
 /**
  * 创建微博
@@ -59,6 +60,31 @@ async function create({ userId, content, image }) {
     }
 }
 
+/**
+ * 获取首页微博列表
+ * @param {number} userId userId
+ * @param {number} pageIndex page index
+ */
+async function getHomeBlogList(userId, pageIndex = 0) {
+    const result = await getFollowersBlogList(
+        {
+            userId,
+            pageIndex,
+            pageSize: PAGE_SIZE
+        }
+    )
+    const { count, blogList } = result
+
+    // 返回
+    return new SuccessModel({
+        isEmpty: blogList.length === 0,
+        blogList,
+        pageSize: PAGE_SIZE,
+        pageIndex,
+        count
+    })
+}
 module.exports = {
-    create
+    create,
+    getHomeBlogList
 }
