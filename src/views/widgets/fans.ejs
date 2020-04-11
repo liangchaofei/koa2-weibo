@@ -1,0 +1,22 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-11 09:59:04
+ * @LastEditTime: 2020-04-11 09:59:23
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /koa2-weibo/src/views/widgets/fans.ejs
+ -->
+ <div class="user-list right-item">
+    <p class="title bold">
+        <i class="fa fa-users"></i>
+        ç²‰ä¸�ï¼ˆ<%= count%>ï¼‰
+    </p>
+    <div class="user-list clear-fix">
+        <% userList.forEach(user => { %>
+            <a href="/profile/<%= user.userName%>" class="user-item float-left">
+                <img src="<%= user.picture%>"/>
+                <span><%= user.nickName%></span>
+            </a>
+        <% }) %>
+    </div>
+</div>

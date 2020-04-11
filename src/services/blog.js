@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:54:10
- * @LastEditTime: 2020-04-10 23:20:49
+ * @LastEditTime: 2020-04-11 10:19:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/services/blog.js
@@ -35,7 +35,7 @@ async function getBlogListByUser({userName,pageIndex = 0 ,pageSize=10}){
     const result = await Blog.findAndCountAll({
         limit:pageSize,
         offset:pageSize * pageIndex,
-        // order:['id','desc'],
+        order:[['id','desc']],
         include:[{
             model:User,
             attributes:['userName','nickName','picture'],
