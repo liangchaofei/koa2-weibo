@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-11 10:04:13
- * @LastEditTime: 2020-04-11 10:19:35
+ * @LastEditTime: 2020-04-11 11:02:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/services/user-relation.js
@@ -32,6 +32,32 @@ const { formatUser } = require('./_format')
     }
  }
 
+
+ async function addFollower(userId,followerId){
+    const result = await UserRelation.create({
+        userId,
+        followerId
+    })
+    return result.dataValues;
+ }
+
+ /**
+ * 删除关注关系
+ * @param {number} userId 用户 id
+ * @param {number} followerId 被关注用户 id
+ */
+async function deleteFollower(userId, followerId) {
+    const result = await UserRelation.destroy({
+        where: {
+            userId,
+            followerId
+        }
+    })
+    return result > 0
+}
+
  module.exports = {
-    getUsersByFollower
+    getUsersByFollower,
+    addFollower,
+    deleteFollower
  }

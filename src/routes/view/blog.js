@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:33:18
- * @LastEditTime: 2020-04-11 10:21:00
+ * @LastEditTime: 2020-04-11 10:31:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/blog.js
@@ -52,6 +52,9 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     // ????
     const fansResult = await getFnas(curUserInfo.id);
     const { count:fansCount,fansList} = fansResult.data;
+
+    // ??????
+    const amIFollowed = fansList.some(item => item.userName === myUserName)
     await ctx.render('profile', {
         blogData: {
             isEmpty, count, pageSize, pageIndex, blogList
@@ -61,8 +64,9 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
             isMe,
             fansData: {
                 count:fansCount,
-                list:fansList
-            }
+                list:fansList,
+            },
+            amIFollowed
         }
     })
 })
