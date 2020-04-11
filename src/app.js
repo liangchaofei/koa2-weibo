@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-29 23:54:07
- * @LastEditTime: 2020-04-11 09:19:56
+ * @LastEditTime: 2020-04-11 22:52:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /weibo-koa2/src/app.js
@@ -22,6 +22,7 @@ const { REDIS_CONF } = require('./conf/db')
 const { isProd } = require('./utils/env')
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
+const atAPIRouter = require('./routes/api/blog-at')
 const squareAPIRouter = require('./routes/api/blog-square')
 const profileApiRouter = require('./routes/api/blog-profile')
 const errorViewRouter = require('./routes/view/error')
@@ -77,6 +78,7 @@ app.use(async (ctx, next) => {
 })
 
 // routes
+app.use(atAPIRouter.routes(),atAPIRouter.allowedMethods())
 app.use(squareAPIRouter.routes(),squareAPIRouter.allowedMethods())
 app.use(profileApiRouter.routes(),profileApiRouter.allowedMethods())
 app.use(homeApiRouter.routes(),homeApiRouter.allowedMethods())
