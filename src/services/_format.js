@@ -1,13 +1,13 @@
 /*
  * @Author: liangchaofei
  * @Date: 2020-04-07 22:19:48
- * @LastEditTime: 2020-04-11 16:14:12
+ * @LastEditTime: 2020-04-11 21:24:42
  * @LastEditors: Please set LastEditors
  * @Description: 数据格式化
  * @FilePath: /koa2-weibo/src/services/_format.js
  */
 
-const { DEFAULT_PICTURE } = require('../conf/db')
+const { DEFAULT_PICTURE,REG_FOR_AT_WHO } = require('../conf/db')
 function _formatUserPicture(obj) {
     console.log('aaa',obj)
     if (obj.picture == null) {
