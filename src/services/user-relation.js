@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-11 10:04:13
- * @LastEditTime: 2020-04-11 11:15:39
+ * @LastEditTime: 2020-04-11 15:42:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/services/user-relation.js
@@ -10,6 +10,7 @@
  // 用户关系
 const { User,UserRelation} = require('../db/model/index')
 const { formatUser } = require('./_format')
+const Sequelize = require('sequelize')
  // 获取用户粉丝
  async function getUsersByFollower(followerId){
     const result = await User.findAndCountAll({
@@ -17,9 +18,12 @@ const { formatUser } = require('./_format')
         order:[['id','desc']],
         includes:[{
             model:UserRelation,
-            where:[
-                followerId
-            ]
+            where:{
+                followerId,
+                userId:{
+                    [Sequelize.Op.ne]:followerId
+                }
+            }
         }]
     })
 
@@ -41,7 +45,10 @@ async function getFollowersByUser(userId){
             attributes:['id','userName','nickName','picture']
         }],
         where:{
-            userId
+            userId,
+            followerId:{
+                [Sequelize.Op.ne]:userId
+            }
         }
     })
 

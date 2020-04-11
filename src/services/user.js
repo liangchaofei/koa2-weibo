@@ -1,7 +1,7 @@
 /*
  * @Author: liangchaofei
  * @Date: 2020-04-04 20:38:06
- * @LastEditTime: 2020-04-09 22:47:54
+ * @LastEditTime: 2020-04-11 15:35:37
  * @LastEditors: Please set LastEditors
  * @Description: user services
  * @FilePath: /koa2-weibo/src/services/user.js
@@ -9,6 +9,7 @@
 
  const { User } = require('../db/model/index')
 const { formatUser }  = require('./_format')
+const { addFollower } = require('./user-relation')
  
  // 获取用户信息
 
@@ -44,8 +45,11 @@ async function createUser({userName,password,gender=3,nickName}){
         nickName:nickName ? nickName: userName,
         gender
     })
+    const data = result.dataValues;
 
-    return result.dataValues;
+    // 自己关注自己
+    addFollower(data.id,data.id)
+    return data;
 }
 
 // 删除当前用户

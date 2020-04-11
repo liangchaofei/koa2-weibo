@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-04 18:13:19
- * @LastEditTime: 2020-04-11 09:52:30
+ * @LastEditTime: 2020-04-11 15:26:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/db/model/index.js
@@ -18,6 +18,10 @@ UserRelation.belongsTo(User, {
 })
 User.hasMany(UserRelation, {
     foreignKey: 'userId'
+})
+Blog.belongsTo(UserRelation, {
+    foreignKey: 'userId',
+    targetKey: 'followerId'
 })
 
 
