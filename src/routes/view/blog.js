@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 23:33:18
- * @LastEditTime: 2020-04-11 16:17:22
+ * @LastEditTime: 2020-04-11 22:31:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/blog.js
@@ -12,7 +12,7 @@ const { getSquareBlogList } = require('../../controller/blog-square')
 const { getHomeBlogList }= require('../../controller/blog-home')
 const { loginRedirect } = require('../../middlewares/loginChecks')
 const { getFans ,getFollowers} = require('../../controller/user-relation')
-
+const { getAtMeCount,getAtMeBlogList, markAsRead } = require('../../controller/blog-at')
 // ??
 router.get('/', loginRedirect, async (ctx, next) => {
     const userInfo = ctx.session.userInfo
@@ -31,8 +31,8 @@ router.get('/', loginRedirect, async (ctx, next) => {
     const { count: followersCount, followersList } = followersResult.data
 
     // ?? @ ??
-    // const atCountResult = await getAtMeCount(userId)
-    // const { count: atCount } = atCountResult.data
+    const atCountResult = await getAtMeCount(userId)
+    const { count: atCount } = atCountResult.data
 
     await ctx.render('index', {
         userData: {
@@ -45,7 +45,7 @@ router.get('/', loginRedirect, async (ctx, next) => {
                 count: followersCount,
                 list: followersList
             },
-            // atCount
+            atCount
         },
         blogData: {
             isEmpty,
@@ -97,6 +97,12 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     const {count:followersCount,followersList } = followersResult.data;
     // ??????
     const amIFollowed = fansList.some(item => item.userName === myUserName)
+
+
+     // 获取 @ 数量
+     const atCountResult = await getAtMeCount(myUserInfo.id)
+     const { count: atCount } = atCountResult.data
+     
     await ctx.render('profile', {
         blogData: {
             isEmpty, count, pageSize, pageIndex, blogList
@@ -112,7 +118,8 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
                 count:followersCount,
                 list:followersList
             },
-            amIFollowed
+            amIFollowed,
+            atCount
         }
     })
 })
@@ -132,6 +139,37 @@ router.get('/square', loginRedirect, async (ctx, next) => {
             count
         }
     })
+})
+
+
+// atMe 路由
+router.get('/at-me', loginRedirect, async (ctx, next) => {
+    const { id: userId } = ctx.session.userInfo
+
+    // 获取 @ 数量
+    const atCountResult = await getAtMeCount(userId)
+    const { count: atCount } = atCountResult.data
+
+    // 获取第一页列表
+    const result = await getAtMeBlogList(userId)
+    const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
+
+    // 渲染页面
+    await ctx.render('atMe', {
+        atCount,
+        blogData: {
+            isEmpty,
+            blogList,
+            pageSize,
+            pageIndex,
+            count
+        }
+    })
+
+    // 标记为已读
+    if (atCount > 0) {
+        await markAsRead(userId)
+    }
 })
 
 module.exports = router;
