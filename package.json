@@ -5,12 +5,13 @@
   "scripts": {
     "start": "node bin/www",
     "dev": "cross-env NODE_ENV=dev ./node_modules/.bin/nodemon --inspect=9229 bin/www",
-    "prd": "cross-env NODE_ENV=production pm2 start bin/www",
+    "prd": "cross-env NODE_ENV=production pm2 start pm2.config.json",
     "lint": "eslint --ext .js ./src",
     "test": "cross-env NODE_ENV=test jest --runInBand --forceExit --colors"
   },
   "dependencies": {
     "ajv": "^6.12.0",
+    "date-fns": "^2.12.0",
     "debug": "^4.1.1",
     "ejs": "^2.3.4",
     "formidable-upload-koa": "^1.0.1",

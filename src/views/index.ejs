@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2020-04-10 22:25:43
- * @LastEditTime: 2020-04-11 22:11:31
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/views/index.ejs
- -->
 <%- include('layout/header', { title: '微博 - 首页', isNav: true, list: true, isInputBlog: true })%>
 
 <div class="container margin-top-20">
@@ -15,7 +7,6 @@
             <!-- 输入框 -->
             <%- include('widgets/input')%>
 
-            
             <!-- 微博列表 -->
             <% if (blogData.isEmpty) { %>
                 <div>
@@ -45,27 +36,27 @@
 
         <!-- 右侧 -->
         <div class="col-4">
-          <!-- 个人信息 -->
-          <div class="right-item">
-            <%- include('widgets/user-info', {
-                userInfo: userData.userInfo,
-                isMe: true,
-                amIFollowed: false,
-                atCount: userData.atCount
-            });%>
-        </div>
+            <!-- 个人信息 -->
+            <div class="right-item">
+                <%- include('widgets/user-info', {
+                    userInfo: userData.userInfo,
+                    isMe: true,
+                    amIFollowed: false,
+                    atCount: userData.atCount
+                });%>
+            </div>
 
-        <!-- 粉丝 -->
-        <%- include('widgets/fans', {
-            count: userData.fansData.count,
-            userList: userData.fansData.list
-        })%>
+            <!-- 粉丝 -->
+            <%- include('widgets/fans', {
+                count: userData.fansData.count,
+                userList: userData.fansData.list
+            })%>
 
-        <!-- 关注 -->
-        <%- include('widgets/followers', {
-            count: userData.followersData.count,
-            userList: userData.followersData.list
-        })%>
+            <!-- 关注 -->
+            <%- include('widgets/followers', {
+                count: userData.followersData.count,
+                userList: userData.followersData.list
+            })%>
         </div> <!-- 右侧结束 -->
     </div>
 </div>

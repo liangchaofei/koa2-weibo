@@ -1,20 +1,16 @@
-/*
- * @Author: your name
- * @Date: 2020-04-09 23:53:11
- * @LastEditTime: 2020-04-11 21:53:08
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/controller/blog-home.js
+/**
+ * @description 首页 controller
+ * @author 双越老师
  */
 
-
-const { createBlog,getFollowersBlogList } = require('../services/blog')
+const xss = require('xss')
+const { createBlog, getFollowersBlogList } = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBlogFailInfo } = require('../model/ErrorInfo')
-const xss = require('xss')
-const { PAGE_SIZE,REG_FOR_AT_WHO } = require('../conf/constant')
+const { PAGE_SIZE, REG_FOR_AT_WHO } = require('../conf/constant')
 const { getUserInfo } = require('../services/user')
 const { createAtRelation } = require('../services/at-relation')
+
 /**
  * 创建微博
  * @param {Object} param0 创建微博所需的数据 { userId, content, image }
@@ -32,12 +28,12 @@ async function create({ userId, content, image }) {
         }
     )
 
-    // // 根据 @ 用户名查询用户信息
+    // 根据 @ 用户名查询用户信息
     const atUserList = await Promise.all(
         atUserNameList.map(userName => getUserInfo(userName))
     )
 
-    // // 根据用户信息，获取用户 id
+    // 根据用户信息，获取用户 id
     const atUserIdList = atUserList.map(user => user.id)
 
     try {
@@ -85,6 +81,7 @@ async function getHomeBlogList(userId, pageIndex = 0) {
         count
     })
 }
+
 module.exports = {
     create,
     getHomeBlogList

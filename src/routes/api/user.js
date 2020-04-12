@@ -1,62 +1,62 @@
-/*
- * @Author: your name
- * @Date: 2020-04-04 18:28:27
- * @LastEditTime: 2020-04-11 21:17:11
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/api/user.js
+/**
+ * @description user API 路由
+ * @author 双越老师
  */
 
-
- const router = require('koa-router')()
- const { isExist,register,login,deleteCurrUser,changeInfo,changePassword ,logout} = require('../../controller/user')
+const router = require('koa-router')()
+const {
+    isExist,
+    register,
+    login,
+    deleteCurUser,
+    changeInfo,
+    changePassword,
+    logout
+} = require('../../controller/user')
 const userValidate = require('../../validator/user')
 const { genValidator } = require('../../middlewares/validator')
 const { isTest } = require('../../utils/env')
 const { loginCheck } = require('../../middlewares/loginChecks')
 const { getFollowers } = require('../../controller/user-relation')
- router.prefix('/api/user')
 
+router.prefix('/api/user')
 
- // 注册
- router.post('/register',genValidator(userValidate), async (ctx,next) => {
-    const { userName, password, gender} = ctx.request.body;
-
+// 注册路由
+router.post('/register', genValidator(userValidate), async (ctx, next) => {
+    const { userName, password, gender } = ctx.request.body
     ctx.body = await register({
         userName,
         password,
         gender
     })
- })
+})
 
- // 用户是否存在
- router.post('/isExist', async (ctx,next) => {
-    const { userName }  = ctx.request.body;
+// 用户名是否存在
+router.post('/isExist', async (ctx, next) => {
+    const { userName } = ctx.request.body
     ctx.body = await isExist(userName)
 })
 
-// 登陆
-router.post('/login',async (ctx,next) => {
-    const { userName,password} = ctx.request.body; 
-    ctx.body = await login(ctx,userName,password)
-}) 
-
+// 登录
+router.post('/login', async (ctx, next) => {
+    const { userName, password } = ctx.request.body
+    ctx.body = await login(ctx, userName, password)
+})
 
 // 删除
-router.post('/delete',loginCheck, async (ctx,next) => {
-    if(isTest){
-        const { userName} = ctx.session.userInfo; 
-        ctx.body = await deleteCurrUser(userName)
+router.post('/delete', loginCheck, async (ctx, next) => {
+    if (isTest) {
+        // 测试环境下，测试账号登录之后，删除自己
+        const { userName } = ctx.session.userInfo
+        ctx.body = await deleteCurUser(userName)
     }
- 
-}) 
+})
 
 // 修改个人信息
 router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, next) => {
     const { nickName, city, picture } = ctx.request.body
     ctx.body = await changeInfo(ctx, { nickName, city, picture })
 })
-
 
 // 修改密码
 router.patch('/changePassword', loginCheck, genValidator(userValidate), async (ctx, next) => {
@@ -82,4 +82,4 @@ router.get('/getAtList', loginCheck, async (ctx, next) => {
     ctx.body = list
 })
 
- module.exports = router;
+module.exports = router

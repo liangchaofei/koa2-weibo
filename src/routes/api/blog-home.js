@@ -1,11 +1,8 @@
-/*
- * @Author: your name
- * @Date: 2020-04-09 23:50:37
- * @LastEditTime: 2020-04-11 16:22:33
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/api/blog-home.js
+/**
+ * @description 首页 API 路由
+ * @author 双越老师
  */
+
 const router = require('koa-router')()
 const { loginCheck } = require('../../middlewares/loginChecks')
 const { create } = require('../../controller/blog-home')
@@ -23,7 +20,6 @@ router.post('/create', loginCheck, genValidator(blogValidate), async (ctx, next)
     ctx.body = await create({ userId, content, image })
 })
 
-
 // 加载更多
 router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
     let { pageIndex } = ctx.params
@@ -35,4 +31,5 @@ router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
 
     ctx.body = result
 })
-module.exports =router;
+
+module.exports = router

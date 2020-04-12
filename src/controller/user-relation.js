@@ -1,43 +1,55 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 10:03:23
- * @LastEditTime: 2020-04-11 11:17:19
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/controller/user-relation.js
+/**
+ * @description 用户关系 controller
+ * @author 双越老师
  */
 
- // 用户关系
- const { getUsersByFollower,addFollower,deleteFollower,getFollowersByUser } = require('../services/user-relation')
- const { SuccessModel,ErrorModel} = require('../model/ResModel')
- const { addFollowerFailInfo,deleteFollowerFailInfo } = require('../model/ErrorInfo')
- 
- async function getFnas(userId){
-    // service
-    const { count,userList} = await getUsersByFollower(userId)
- 
+const {
+    getUsersByFollower,
+    getFollowersByUser,
+    addFollower,
+    deleteFollower
+} = require('../services/user-relation')
+const { SuccessModel, ErrorModel } = require('../model/ResModel')
+const { addFollowerFailInfo, deleteFollowerFailInfo } = require('../model/ErrorInfo')
+
+/**
+ * 根据 userid 获取粉丝列表
+ * @param {number} userId 用户 id
+ */
+async function getFans(userId) {
+    const { count, userList } = await getUsersByFollower(userId)
+
+    // 返回
     return new SuccessModel({
-        count,fansList
+        count,
+        fansList: userList
     })
 }
 
-// 关注人列表
-
-async function getFollowers(userId){
-    const { count,userList} = getFollowersByUser(userId)
+/**
+ * 获取关注人列表
+ * @param {number} userId userId
+ */
+async function getFollowers(userId) {
+    const { count, userList } = await getFollowersByUser(userId)
 
     return new SuccessModel({
         count,
-        followersList:userList
+        followersList: userList
     })
 }
 
-
-async function follow(myUserId,curUserId){
-    try{
-        addFollower(myUserId,curUserId)
+/**
+ * 关注
+ * @param {number} myUserId 当前登录的用户 id
+ * @param {number} curUserId 要被关注的用户 id
+ */
+async function follow(myUserId, curUserId) {
+    try {
+        await addFollower(myUserId, curUserId)
         return new SuccessModel()
-    }catch(err){
+    } catch (ex) {
+        console.error(ex)
         return new ErrorModel(addFollowerFailInfo)
     }
 }
@@ -54,9 +66,10 @@ async function unFollow(myUserId, curUserId) {
     }
     return new ErrorModel(deleteFollowerFailInfo)
 }
- module.exports = {
+
+module.exports = {
     getFans,
+    getFollowers,
     follow,
-    unFollow,
-    getFollowers
- }
+    unFollow
+}

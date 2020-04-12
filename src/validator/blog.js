@@ -1,12 +1,9 @@
-/*
- * @Author: your name
- * @Date: 2020-04-10 00:03:54
- * @LastEditTime: 2020-04-10 00:06:18
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/validator/blog.js
+/**
+ * @description 微博 数据格式校验
+ * @author 双越老师
  */
-const validate = require('./validate')
+
+const validate = require('./_validate')
 
 // 校验规则
 const SCHEMA = {

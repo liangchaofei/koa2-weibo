@@ -1,10 +1,6 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 09:14:41
- * @LastEditTime: 2020-04-11 09:18:58
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/api/blog-square.js
+/**
+ * @description 广场 API 路由
+ * @author 双越老师
  */
 
 const router = require('koa-router')()

@@ -1,36 +1,35 @@
-/*
- * @Author: your name
- * @Date: 2020-04-09 23:33:18
- * @LastEditTime: 2020-04-11 22:31:28
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/view/blog.js
+/**
+ * @description 微博 view 路由
+ * @author 双越老师
  */
-const router = require('koa-router')();
+
+const router = require('koa-router')()
+const { loginRedirect } = require('../../middlewares/loginChecks')
 const { getProfileBlogList } = require('../../controller/blog-profile')
 const { getSquareBlogList } = require('../../controller/blog-square')
-const { getHomeBlogList }= require('../../controller/blog-home')
-const { loginRedirect } = require('../../middlewares/loginChecks')
-const { getFans ,getFollowers} = require('../../controller/user-relation')
-const { getAtMeCount,getAtMeBlogList, markAsRead } = require('../../controller/blog-at')
-// ??
+const { isExist } = require('../../controller/user')
+const { getFans, getFollowers } = require('../../controller/user-relation')
+const { getHomeBlogList } = require('../../controller/blog-home')
+const { getAtMeCount, getAtMeBlogList, markAsRead } = require('../../controller/blog-at')
+
+// 首页
 router.get('/', loginRedirect, async (ctx, next) => {
     const userInfo = ctx.session.userInfo
     const { id: userId } = userInfo
 
-    // ???????
+    // 获取第一页数据
     const result = await getHomeBlogList(userId)
     const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
 
-    // ????
+    // 获取粉丝
     const fansResult = await getFans(userId)
     const { count: fansCount, fansList } = fansResult.data
 
-    // ???????
+    // 获取关注人列表
     const followersResult = await getFollowers(userId)
     const { count: followersCount, followersList } = followersResult.data
 
-    // ?? @ ??
+    // 获取 @ 数量
     const atCountResult = await getAtMeCount(userId)
     const { count: atCount } = atCountResult.data
 
@@ -57,14 +56,13 @@ router.get('/', loginRedirect, async (ctx, next) => {
     })
 })
 
-// ????
+// 个人主页
 router.get('/profile', loginRedirect, async (ctx, next) => {
     const { userName } = ctx.session.userInfo
     ctx.redirect(`/profile/${userName}`)
 })
-
 router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
-
+    // 已登录用户的信息
     const myUserInfo = ctx.session.userInfo
     const myUserName = myUserInfo.userName
 
@@ -72,51 +70,58 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     const { userName: curUserName } = ctx.params
     const isMe = myUserName === curUserName
     if (isMe) {
-        // ???????
+        // 是当前登录用户
         curUserInfo = myUserInfo
     } else {
-        // ????????
+        // 不是当前登录用户
         const existResult = await isExist(curUserName)
         if (existResult.errno !== 0) {
-            // ??????
+            // 用户名不存在
             return
         }
-        // ?????
+        // 用户名存在
         curUserInfo = existResult.data
     }
 
-    const result = await getProfileBlogList(curUserName,0)
-    const { isEmpty, count, pageSize, pageIndex, blogList } = result;
+    // 获取微博第一页数据
+    const result = await getProfileBlogList(curUserName, 0)
+    const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
 
-    // ????
-    const fansResult = await getFans(curUserInfo.id);
-    const { count:fansCount,fansList} = fansResult.data;
+    // 获取粉丝
+    const fansResult = await getFans(curUserInfo.id)
+    const { count: fansCount, fansList } = fansResult.data
 
-    // ???????
-    const followersResult = await getFollowers(curUserInfo.id);
-    const {count:followersCount,followersList } = followersResult.data;
-    // ??????
-    const amIFollowed = fansList.some(item => item.userName === myUserName)
+    // 获取关注人列表
+    const followersResult = await getFollowers(curUserInfo.id)
+    const { count: followersCount, followersList } = followersResult.data
 
+    // 我是否关注了此人？
+    const amIFollowed = fansList.some(item => {
+        return item.userName === myUserName
+    })
 
-     // 获取 @ 数量
-     const atCountResult = await getAtMeCount(myUserInfo.id)
-     const { count: atCount } = atCountResult.data
-     
+    // 获取 @ 数量
+    const atCountResult = await getAtMeCount(myUserInfo.id)
+    const { count: atCount } = atCountResult.data
+
     await ctx.render('profile', {
         blogData: {
-            isEmpty, count, pageSize, pageIndex, blogList
+            isEmpty,
+            blogList,
+            pageSize,
+            pageIndex,
+            count
         },
         userData: {
             userInfo: curUserInfo,
             isMe,
             fansData: {
-                count:fansCount,
-                list:fansList,
+                count: fansCount,
+                list: fansList
             },
-            followersData:{
-                count:followersCount,
-                list:followersList
+            followersData: {
+                count: followersCount,
+                list: followersList
             },
             amIFollowed,
             atCount
@@ -124,9 +129,9 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     })
 })
 
-// ??
+// 广场
 router.get('/square', loginRedirect, async (ctx, next) => {
-    // ??????????
+    // 获取微博数据，第一页
     const result = await getSquareBlogList(0)
     const { isEmpty, blogList, pageSize, pageIndex, count } = result.data || {}
 
@@ -140,7 +145,6 @@ router.get('/square', loginRedirect, async (ctx, next) => {
         }
     })
 })
-
 
 // atMe 路由
 router.get('/at-me', loginRedirect, async (ctx, next) => {
@@ -172,4 +176,4 @@ router.get('/at-me', loginRedirect, async (ctx, next) => {
     }
 })
 
-module.exports = router;
+module.exports = router

@@ -1,28 +1,29 @@
-/*
- * @Author: your name
- * @Date: 2020-04-07 23:44:24
- * @LastEditTime: 2020-04-07 23:50:30
- * @LastEditors: Please set LastEditors
- * @Description: json schema 验证中间价
- * @FilePath: /koa2-weibo/src/middlewares/validator.js
+/**
+ * @description json schema 验证中间件
+ * @author 双越老师
  */
 
 const { ErrorModel } = require('../model/ResModel')
 const { jsonSchemaFileInfo } = require('../model/ErrorInfo')
-function genValidator(validateFn){
-    async function validator(ctx,next){
-        // 校验
-        const data = ctx.request.body;
+
+/**
+ * 生成 json schema 验证的中间件
+ * @param {function} validateFn 验证函数
+ */
+function genValidator(validateFn) {
+    // 定义中间件函数
+    async function validator(ctx, next) {
+        const data = ctx.request.body
         const error = validateFn(data)
-        if(error){
-            // 失败
+        if (error) {
+            // 验证失败
             ctx.body = new ErrorModel(jsonSchemaFileInfo)
-            return;
+            return
         }
-        // 成功
+        // 验证成功，继续
         await next()
     }
-  
+    // 返回中间件
     return validator
 }
 

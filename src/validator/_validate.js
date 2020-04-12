@@ -1,11 +1,8 @@
-/*
- * @Author: your name
- * @Date: 2020-04-07 23:34:02
- * @LastEditTime: 2020-04-07 23:35:18
- * @LastEditors: Please set LastEditors
- * @Description: json schema 校验
- * @FilePath: /koa2-weibo/src/validator/validate.js
+/**
+ * @description json schema 校验
+ * @author 双越老师
  */
+
 const Ajv = require('ajv')
 const ajv = new Ajv({
     // allErrors: true // 输出所有的错误（比较慢）

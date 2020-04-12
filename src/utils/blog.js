@@ -1,10 +1,6 @@
-/*
- * @Author: your name
- * @Date: 2020-04-10 23:11:38
- * @LastEditTime: 2020-04-10 23:12:02
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/utils/blog.js
+/**
+ * @description 微博数据相关的工具方法
+ * @author 双越老师
  */
 
 const fs = require('fs')

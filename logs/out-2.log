@@ -1,0 +1,6 @@
+2020-04-12 22:44:50:   <-- GET /javascripts/my-ajax.js
+2020-04-12 22:44:50:   --> GET /javascripts/my-ajax.js 200 12ms 2.45kb
+2020-04-12 22:44:50:   <-- GET /javascripts/query-object.js
+2020-04-12 22:44:50:   --> GET /javascripts/query-object.js 200 2ms 8.46kb
+2020-04-12 22:44:51:   <-- GET /favicon.ico
+2020-04-12 22:44:51:   --> GET /favicon.ico 200 13ms 2.26kb

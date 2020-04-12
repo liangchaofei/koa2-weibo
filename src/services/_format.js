@@ -1,15 +1,16 @@
-/*
- * @Author: liangchaofei
- * @Date: 2020-04-07 22:19:48
- * @LastEditTime: 2020-04-11 21:24:42
- * @LastEditors: Please set LastEditors
- * @Description: 数据格式化
- * @FilePath: /koa2-weibo/src/services/_format.js
+/**
+ * @description 数据格式化
+ * @author 双越老师
  */
 
-const { DEFAULT_PICTURE,REG_FOR_AT_WHO } = require('../conf/db')
+const { DEFAULT_PICTURE, REG_FOR_AT_WHO } = require('../conf/constant')
+const { timeFormat } = require('../utils/dt')
+
+/**
+ * 用户默认头像
+ * @param {Object} obj 用户对象
+ */
 function _formatUserPicture(obj) {
-    console.log('aaa',obj)
     if (obj.picture == null) {
         obj.picture = DEFAULT_PICTURE
     }
@@ -63,6 +64,7 @@ function _formatContent(obj) {
 
     return obj
 }
+
 /**
  * 格式化微博信息
  * @param {Array|Object} list 微博列表或者单个微博对象
@@ -82,7 +84,8 @@ function formatBlog(list) {
     result = _formatContent(result)
     return result
 }
- module.exports = {
-     formatUser,
-     formatBlog
- }
+
+module.exports = {
+    formatUser,
+    formatBlog
+}

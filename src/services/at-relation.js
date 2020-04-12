@@ -1,12 +1,7 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 21:53:15
- * @LastEditTime: 2020-04-11 22:39:20
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/services/at-relation.js
+/**
+ * @description 微博 @ 用户关系 service
+ * @author 双越老师
  */
-
 
 const { AtRelation, Blog, User } = require('../db/model/index')
 const { formatBlog, formatUser } = require('./_format')
@@ -23,7 +18,6 @@ async function createAtRelation(blogId, userId) {
     })
     return result.dataValues
 }
-
 
 /**
  * 获取 @ 用户的微博数量（未读的）

@@ -1,15 +1,9 @@
-/*
- * @Author: your name
- * @Date: 2020-04-07 23:12:36
- * @LastEditTime: 2020-04-08 00:38:51
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/utils/cryp.js
+/**
+ * @description 加密方法
+ * @author 双越老师
  */
 
- // 加密方法
-
- const crypto = require('crypto')
+const crypto = require('crypto')
 const { CRYPTO_SECRET_KEY } = require('../conf/secretKeys')
 
 /**

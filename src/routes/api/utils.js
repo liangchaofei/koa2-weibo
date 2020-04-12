@@ -1,15 +1,13 @@
-/*
- * @Author: your name
- * @Date: 2020-04-08 23:22:56
- * @LastEditTime: 2020-04-08 23:26:53
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/api/utils.js
+/**
+ * @description utils api 路由
+ * @author 双越老师
  */
+
 const router = require('koa-router')()
 const { loginCheck } = require('../../middlewares/loginChecks')
 const koaFrom = require('formidable-upload-koa')
 const { saveFile } = require('../../controller/utils')
+
 router.prefix('/api/utils')
 
 // 上传图片

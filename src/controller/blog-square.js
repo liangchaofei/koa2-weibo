@@ -1,11 +1,8 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 09:14:52
- * @LastEditTime: 2020-04-11 09:18:46
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/controller/blog-square.js
+/**
+ * @description 广场页 controller
+ * @author 双越老师
  */
+
 const { PAGE_SIZE } = require('../conf/constant')
 const { SuccessModel } = require('../model/ResModel')
 const { getSquareCacheList } = require('../cache/blog')

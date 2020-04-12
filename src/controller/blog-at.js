@@ -1,10 +1,6 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 22:04:39
- * @LastEditTime: 2020-04-11 22:38:08
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/controller/blog-at.js
+/**
+ * @description 微博 @ 关系 controller
+ * @author 双越老师
  */
 
 const {
@@ -65,6 +61,7 @@ async function markAsRead(userId) {
 
     // 不需要返回 SuccessModel 或者 ErrorModel
 }
+
 module.exports = {
     getAtMeCount,
     getAtMeBlogList,

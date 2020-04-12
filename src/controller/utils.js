@@ -1,10 +1,6 @@
-/*
- * @Author: your name
- * @Date: 2020-04-08 23:27:02
- * @LastEditTime: 2020-04-08 23:28:32
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/controller/utils.js
+/**
+ * @description utils controller
+ * @author 双越老师
  */
 
 const path = require('path')

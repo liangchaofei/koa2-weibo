@@ -1,12 +1,7 @@
-/*
- * @Author: your name
- * @Date: 2020-04-11 22:50:33
- * @LastEditTime: 2020-04-11 22:50:34
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /koa2-weibo/src/routes/api/blog-at.js
+/**
+ * @description 微博 @ 关系 controller
+ * @author 双越老师
  */
-
 
 const router = require('koa-router')()
 const { loginCheck } = require('../../middlewares/loginChecks')

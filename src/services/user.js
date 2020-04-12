@@ -1,19 +1,18 @@
-/*
- * @Author: liangchaofei
- * @Date: 2020-04-04 20:38:06
- * @LastEditTime: 2020-04-11 15:35:37
- * @LastEditors: Please set LastEditors
- * @Description: user services
- * @FilePath: /koa2-weibo/src/services/user.js
+/**
+ * @description user service
+ * @author 双越老师
  */
 
- const { User } = require('../db/model/index')
-const { formatUser }  = require('./_format')
+const { User } = require('../db/model/index')
+const { formatUser } = require('./_format')
 const { addFollower } = require('./user-relation')
- 
- // 获取用户信息
 
- async function getUserInfo(userName, password) {
+/**
+ * 获取用户信息
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ */
+async function getUserInfo(userName, password) {
     // 查询条件
     const whereOpt = {
         userName
@@ -38,28 +37,40 @@ const { addFollower } = require('./user-relation')
     return formatRes
 }
 
-async function createUser({userName,password,gender=3,nickName}){
+/**
+ * 创建用户
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ * @param {number} gender 性别
+ * @param {string} nickName 昵称
+ */
+async function createUser({ userName, password, gender = 3, nickName }) {
     const result = await User.create({
         userName,
         password,
-        nickName:nickName ? nickName: userName,
+        nickName: nickName ? nickName : userName,
         gender
     })
-    const data = result.dataValues;
+    const data = result.dataValues
 
-    // 自己关注自己
-    addFollower(data.id,data.id)
-    return data;
+    // 自己关注自己（为了方便首页获取数据）
+    addFollower(data.id, data.id)
+
+    return data
 }
 
-// 删除当前用户
-async function  deleteUser(userName){
+/**
+ * 删除用户
+ * @param {string} userName 用户名
+ */
+async function deleteUser(userName) {
     const result = await User.destroy({
-        where:{
+        where: {
             userName
         }
     })
-    return result>0;
+    // result 删除的行数
+    return result > 0
 }
 
 /**
@@ -101,9 +112,9 @@ async function updateUser(
     return result[0] > 0 // 修改的行数
 }
 
- module.exports= {
+module.exports = {
     getUserInfo,
     createUser,
     deleteUser,
     updateUser
- }
+}
