@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-30 00:10:05
- * @LastEditTime: 2020-04-18 16:37:35
- * @LastEditors: your name
+ * @LastEditTime: 2020-04-18 16:42:56
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/README.md
  -->
@@ -12,27 +12,27 @@
 
 登陆页面：
 
-![image-20200417230654767](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417230654767.png)
+![image-20200417230654767](./img/login.png)
 
 注册页面：
 
-![image-20200417230711059](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417230711059.png)
+![image-20200417230711059](./img/register.png)
 
 首页：
 
-![image-20200417231105950](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417231105950.png)
+![image-20200417231105950](./img/home.png)
 
 广场：
 
-![image-20200417231209888](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417231209888.png)
+![image-20200417231209888](./img/square.png)
 
 我的空间：
 
-![image-20200417231237274](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417231237274.png)
+![image-20200417231237274](./img/profile.png)
 
 设置：
 
-![image-20200417231250818](/Users/liangchaofei/Library/Application Support/typora-user-images/image-20200417231250818.png)
+![image-20200417231250818](./img/setting.png)
 
 ### 技术选型：koa2+mysql+session+ejs+redis+jest
 
