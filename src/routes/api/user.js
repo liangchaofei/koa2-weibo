@@ -1,6 +1,6 @@
 /**
  * @description user API 路由
- * @author 双越老师
+ * @author blue
  */
 
 const router = require('koa-router')()

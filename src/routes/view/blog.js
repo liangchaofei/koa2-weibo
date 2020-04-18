@@ -1,6 +1,6 @@
 /**
  * @description 微博 view 路由
- * @author 双越老师
+ * @author blue
  */
 
 const router = require('koa-router')()

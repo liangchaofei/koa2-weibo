@@ -1,6 +1,6 @@
 /**
  * @description json schema 校验
- * @author 双越老师
+ * @author blue
  */
 
 const Ajv = require('ajv')

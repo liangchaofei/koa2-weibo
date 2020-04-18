@@ -1,6 +1,6 @@
 /**
  * @description 首页 controller
- * @author 双越老师
+ * @author blue
  */
 
 const xss = require('xss')

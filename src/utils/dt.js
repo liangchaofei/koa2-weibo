@@ -1,6 +1,6 @@
 /**
  * @description 时间相关的工具函数
- * @author 双越老师
+ * @author blue
  */
 
 const { format } = require('date-fns')

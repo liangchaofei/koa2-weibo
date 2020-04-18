@@ -1,6 +1,6 @@
 /**
  * @description 用户关系 services
- * @author 双越老师
+ * @author blue
  */
 
 const { User, UserRelation } = require('../db/model/index')

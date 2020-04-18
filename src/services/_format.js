@@ -1,6 +1,6 @@
 /**
  * @description 数据格式化
- * @author 双越老师
+ * @author blue
  */
 
 const { DEFAULT_PICTURE, REG_FOR_AT_WHO } = require('../conf/constant')

@@ -1,6 +1,6 @@
 /**
  * @description 广场页 controller
- * @author 双越老师
+ * @author blue
  */
 
 const { PAGE_SIZE } = require('../conf/constant')

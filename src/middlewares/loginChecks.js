@@ -1,6 +1,6 @@
 /**
  * @description 登录验证的中间件
- * @author 双越老师
+ * @author blue
  */
 
 const { ErrorModel } = require('../model/ResModel')

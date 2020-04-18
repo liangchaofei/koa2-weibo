@@ -1,6 +1,6 @@
 /**
  * @description 环境变量
- * @author 双越老师
+ * @author blue
  */
 
 const ENV = process.env.NODE_ENV

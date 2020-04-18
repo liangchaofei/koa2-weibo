@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2019-09-14 15:57:12
- * @LastEditTime: 2020-04-12 22:47:07
- * @LastEditors: your name
+ * @LastEditTime: 2020-04-17 23:52:20
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo/src/routes/view/user.js
  */
 /**
  * @description user view 路由
- * @author 双越老师
+ * @author blue
  */
 
 const router = require('koa-router')()

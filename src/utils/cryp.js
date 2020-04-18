@@ -1,6 +1,6 @@
 /**
  * @description 加密方法
- * @author 双越老师
+ * @author blue
  */
 
 const crypto = require('crypto')

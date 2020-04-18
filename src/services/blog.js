@@ -1,6 +1,6 @@
 /**
  * @description 微博 service
- * @author 双越老师
+ * @author blue
  */
 
 const { Blog, User, UserRelation } = require('../db/model/index')

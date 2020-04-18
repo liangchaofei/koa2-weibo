@@ -1,6 +1,6 @@
 /**
  * @description 微博 @ 用户关系 service
- * @author 双越老师
+ * @author blue
  */
 
 const { AtRelation, Blog, User } = require('../db/model/index')

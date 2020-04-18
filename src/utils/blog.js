@@ -1,6 +1,6 @@
 /**
  * @description 微博数据相关的工具方法
- * @author 双越老师
+ * @author blue
  */
 
 const fs = require('fs')

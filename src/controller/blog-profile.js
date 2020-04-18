@@ -1,6 +1,6 @@
 /**
  * @description 个人主页 controller
- * @author 双越老师
+ * @author blue
  */
 
 const { getBlogListByUser } = require('../services/blog')

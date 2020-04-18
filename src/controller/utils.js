@@ -1,6 +1,6 @@
 /**
  * @description utils controller
- * @author 双越老师
+ * @author blue
  */
 
 const path = require('path')
